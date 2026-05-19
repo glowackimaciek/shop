@@ -1,0 +1,17 @@
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from routers import produkty, kategorie, koszyk, zamowienia
+
+app = FastAPI(title="Mój sklep")
+
+app.include_router(produkty.router)
+app.include_router(kategorie.router)
+app.include_router(koszyk.router)
+app.include_router(zamowienia.router)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/")
+def root():
+    return {"message": "Witaj w moim sklepie"}
